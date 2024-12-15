@@ -4,9 +4,9 @@ sources:
   - name: raw
     schema: gz_raw_data
     tables:
-      - name: raw
+      - name: product
         identifier: raw_gz_product
-      - name: raw
+      - name: sales
         identifier: raw_gz_sales
-      - name: raw
+      - name: ship
         identifier: raw_gz_ship
