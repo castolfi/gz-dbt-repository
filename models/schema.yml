@@ -3,10 +3,54 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
+    description: This dataset contains the raw data for sales, products, and shipping information from Greenweez.
+
     tables:
+      # Product Table
       - name: product
         identifier: raw_gz_product
-      - name: sales
-        identifier: raw_gz_sales
+        description: Product details for Greenweez, including product IDs and purchase prices.
+        columns:
+          - name: products_id
+            description: Primary key for the product table.
+            tests:
+              - unique
+              - not_null
+          - name: purchase_price
+            description: The purchase price of the product.
+
+      # Ship Table
       - name: ship
         identifier: raw_gz_ship
+        description: Shipping details for Greenweez orders.
+        columns:
+          - name: orders_id
+            description: Primary key for the ship table.
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: The fee charged to the customer for shipping the order.
+          - name: log_cost
+            description: The cost of preparing the parcel in the warehouse.
+          - name: ship_cost
+            description: The cost paid by Greenweez to the carrier.
+
+      # Sales Table
+      - name: sales
+        identifier: raw_gz_sales
+        description: Sales data for Greenweez, where each row represents a product within an order.
+        columns:
+          - name: date_date
+            description: The date when the purchase was made.
+          - name: orders_id
+            description: A foreign key linking to the ship table.
+          - name: pdt_id
+            description: A foreign key linking to the product table.
+          - name: revenue
+            description: The total revenue generated for the product in a specific order.
+          - name: quantity
+            description: The number of units of the product purchased in a given order.
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"

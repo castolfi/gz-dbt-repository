@@ -13,10 +13,11 @@ filtered AS (
 
 renamed AS (
     SELECT
-        shipping_id,
+        orders_id,
         shipping_fee,
         CAST(ship_cost AS FLOAT64) AS ship_cost  -- Cast column to FLOAT64
     FROM filtered
 )
 
 SELECT * FROM renamed
+
